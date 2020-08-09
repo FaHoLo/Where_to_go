@@ -8,3 +8,6 @@ class Place(models.Model):
     description_long = models.TextField('Полное описание', blank=True)
     lat = models.FloatField('Широта', blank=True)
     lng = models.FloatField('Долгота', blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.title)
