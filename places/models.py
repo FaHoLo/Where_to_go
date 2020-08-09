@@ -11,3 +11,12 @@ class Place(models.Model):
 
     def __str__(self):
         return '{}'.format(self.title)
+
+
+class Image(models.Model):
+    image = models.ImageField('Изображение')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    image_number = models.PositiveIntegerField('Номер картинки для порядка отображения на сайте')
+
+    def __str__(self):
+        return f'{self.image_number} {self.place.title}'
