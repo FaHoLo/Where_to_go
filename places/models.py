@@ -18,6 +18,9 @@ class Image(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     image_number = models.PositiveIntegerField('Номер картинки для порядка отображения на сайте')
 
+    class Meta:
+        ordering = ('image_number',)
+
     def __str__(self):
         return f'{self.image_number} {self.place.title}'
 
