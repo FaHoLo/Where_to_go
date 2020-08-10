@@ -16,7 +16,8 @@ class Place(models.Model):
 class Image(models.Model):
     image = models.ImageField('Изображение')
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    image_number = models.PositiveIntegerField('Номер картинки для порядка отображения на сайте')
+    image_number = models.PositiveIntegerField('Номер картинки для порядка отображения на сайте',
+                                               default=0)
 
     class Meta:
         ordering = ('image_number',)
