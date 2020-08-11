@@ -31,7 +31,6 @@ class Location(models.Model):
     '''Location of event'''
     title = models.CharField('Короткое название', max_length=30)
     place_id = models.CharField('Уникальный идентификатор локации', max_length=30, unique=True)
-    details_url = models.URLField(verbose_name='Ссылка на детальную информацию', blank=True, null=True)
     lat = models.FloatField('Широта')
     lng = models.FloatField('Долгота')
 
