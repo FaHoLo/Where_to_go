@@ -26,4 +26,6 @@ class PlaceAdmin(admin.ModelAdmin):
     inlines = (ImageInline, )
 
 
-admin.site.register(Location)
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    raw_id_fields = ('place_info',)

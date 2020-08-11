@@ -9,9 +9,9 @@ def show_index(request):
       "type": "FeatureCollection",
       "features": []
     }
-    all_locations = Location.objects.all()
+    all_locations = Location.objects.prefetch_related('place_info')
     for location in all_locations:
-        details_url = reverse('place_info', args=[location.id])
+        details_url = reverse('place_info', args=[location.place_info.id])
         places_geojson['features'].append({
             "type": "Feature",
             "geometry": {
