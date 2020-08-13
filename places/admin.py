@@ -29,3 +29,4 @@ class PlaceAdmin(admin.ModelAdmin):
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     raw_id_fields = ('place_info',)
+    search_fields = ('title',)
