@@ -12,4 +12,7 @@ urlpatterns = [
     path('', views.show_index),
     path('places/<int:place_id>/', pl_views.show_place_info, name='place_info'),
     path('tinymce/', include('tinymce.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
