@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from .models import Place, Image
+from .models import Place
 
 
 def show_place_info(request, place_id):
