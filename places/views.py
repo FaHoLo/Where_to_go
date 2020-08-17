@@ -6,7 +6,7 @@ from .models import Place
 
 def show_place_info(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
-    images = place.place_images.all()
+    images = place.images.all()
     imgs = [image.image.url for image in images]
     place_info = {
         'title': place.title,
