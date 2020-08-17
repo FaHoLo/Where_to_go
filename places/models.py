@@ -10,7 +10,7 @@ class Place(models.Model):
                                    null=True)
     place_id = models.CharField('Уникальный идентификатор локации', max_length=30, unique=True,
                                 null=True)
-    description_short = models.CharField('Короткое описание', max_length=300, blank=True)
+    description_short = models.CharField('Короткое описание', max_length=400, blank=True)
     description_long = HTMLField('Полное описание', blank=True)
     lat = models.FloatField('Широта')
     lng = models.FloatField('Долгота')
