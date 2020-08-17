@@ -86,11 +86,12 @@ def create_location(data: dict, place: Place) -> Location:
 
 
 def parse_location_title(full_title: str, max_length=30) -> str:
-    '''
-    Parse location title from long string full_title
-    Firstly, tries to find «Title», title = full_title if not
+    """Parse location title from long string full_title.
+
+    Firstly, tries to find «Title», title = full_title if not.
     Then, shortens received title to max_length.
-    '''
+    """
+
     start_quote_index = full_title.find('«')
     end_quote_index = full_title.find('»')
     if start_quote_index != -1 and end_quote_index != -1:
