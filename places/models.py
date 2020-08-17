@@ -8,8 +8,8 @@ class Place(models.Model):
     title = models.CharField('Заголовок', max_length=60)
     description_short = models.CharField('Короткое описание', max_length=300, blank=True)
     description_long = HTMLField('Полное описание', blank=True)
-    lat = models.FloatField('Широта', blank=True)
-    lng = models.FloatField('Долгота', blank=True)
+    lat = models.FloatField('Широта')
+    lng = models.FloatField('Долгота')
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -19,8 +19,9 @@ class Image(models.Model):
     """Place image."""
 
     image = models.ImageField('Изображение')
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    image_number = models.PositiveIntegerField('Номер картинки для порядка отображения на сайте',
+    place = models.ForeignKey(Place, verbose_name='Локация, к которой относится изображение',
+                              on_delete=models.CASCADE)
+    image_number = models.PositiveIntegerField('Номер изображения для порядка отображения на сайте',
                                                default=0)
 
     class Meta:
