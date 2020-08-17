@@ -33,17 +33,3 @@ class Image(models.Model):
 
     def __str__(self):
         return f'{self.image_number} {self.place.title}'
-
-
-class Location(models.Model):
-    """Location of event."""
-
-    title = models.CharField('Короткое название', max_length=30)
-    place_id = models.CharField('Уникальный идентификатор локации', max_length=30, unique=True)
-    place_info = models.OneToOneField(Place, verbose_name='Подробная информация о локации',
-                                      on_delete=models.CASCADE)
-    lat = models.FloatField('Широта')
-    lng = models.FloatField('Долгота')
-
-    def __str__(self):
-        return f'{self.title}'

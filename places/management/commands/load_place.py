@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 import requests
 from slugify import slugify
 
-from places.models import Place, Location, Image
+from places.models import Place, Image
 
 
 class Command(BaseCommand):
@@ -21,12 +21,9 @@ class Command(BaseCommand):
                 data = download_json_data(url)
                 place = create_place(data)
                 upload_place_images(place, data['imgs'])
-                location = create_location(data, place)
 
                 self.stdout.write(self.style.SUCCESS(
-                    'Successfully added Place: {place_id}, Location: {location_title}'.format(
-                        place_id=place.id, location_title=location.title
-                    )
+                    f'Successfully added Place: {place.short_title}'
                 ))
             except Exception:
                 raise CommandError(
@@ -41,14 +38,38 @@ def download_json_data(url: str) -> dict:
 
 
 def create_place(data: dict) -> Place:
+    short_title = parse_short_title(data['title'])
     place = Place.objects.get_or_create(
         title=data['title'],
+        short_title=short_title,
+        place_id=slugify(short_title),
         description_short=data['description_short'],
         description_long=data['description_long'],
         lat=data['coordinates']['lat'],
         lng=data['coordinates']['lng'],
     )[0]
     return place
+
+
+def parse_short_title(full_title: str, max_length=30) -> str:
+    """Parse location title from long string full_title.
+
+    Firstly, tries to find «Title», title = full_title if not.
+    Then, shortens received title to max_length.
+    """
+
+    start_quote_index = full_title.find('«')
+    end_quote_index = full_title.find('»')
+    if start_quote_index != -1 and end_quote_index != -1:
+        title = full_title[start_quote_index+1:end_quote_index]
+    elif start_quote_index != -1 and end_quote_index == -1:
+        title = full_title[start_quote_index+1:]
+    else:
+        title = full_title
+
+    while len(title) > max_length:
+        title = ' '.join(title.split(' ')[:-1])
+    return title
 
 
 def upload_place_images(place: Place, image_urls: dict) -> None:
@@ -71,36 +92,3 @@ def create_temporary_file(file_data: bytes) -> _TemporaryFileWrapper:
     temp_file.write(file_data)
     temp_file.flush()
     return temp_file
-
-
-def create_location(data: dict, place: Place) -> Location:
-    title = parse_location_title(data['title'])
-    location = Location.objects.get_or_create(
-        title=title,
-        place_id=slugify(title),
-        place_info=place,
-        lat=data['coordinates']['lat'],
-        lng=data['coordinates']['lng'],
-    )[0]
-    return location
-
-
-def parse_location_title(full_title: str, max_length=30) -> str:
-    """Parse location title from long string full_title.
-
-    Firstly, tries to find «Title», title = full_title if not.
-    Then, shortens received title to max_length.
-    """
-
-    start_quote_index = full_title.find('«')
-    end_quote_index = full_title.find('»')
-    if start_quote_index != -1 and end_quote_index != -1:
-        title = full_title[start_quote_index+1:end_quote_index]
-    elif start_quote_index != -1 and end_quote_index == -1:
-        title = full_title[start_quote_index+1:]
-    else:
-        title = full_title
-
-    while len(title) > max_length:
-        title = ' '.join(title.split(' ')[:-1])
-    return title

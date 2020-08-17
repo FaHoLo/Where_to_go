@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 
-from places.models import Location
+from places.models import Place
 
 
 def show_index(request):
@@ -9,18 +9,19 @@ def show_index(request):
       "type": "FeatureCollection",
       "features": []
     }
-    all_locations = Location.objects.prefetch_related('place_info')
-    for location in all_locations:
-        details_url = reverse('place_info', args=[location.place_info.id])
+    all_places = Place.objects.all()
+
+    for place in all_places:
+        details_url = reverse('place_info', args=[place.id])
         places_geojson['features'].append({
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [location.lng, location.lat]
+                "coordinates": [place.lng, place.lat]
             },
             "properties": {
-                "title": location.title,
-                "placeId": location.place_id,
+                "title": place.short_title,
+                "placeId": place.place_id,
                 "detailsUrl": details_url,
             }
         })

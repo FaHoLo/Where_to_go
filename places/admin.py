@@ -2,7 +2,7 @@ from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Place, Image, Location
+from .models import Place, Image
 
 
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
@@ -24,9 +24,3 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 class PlaceAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     inlines = (ImageInline, )
-
-
-@admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
-    raw_id_fields = ('place_info',)
-    search_fields = ('title',)
