@@ -12,11 +12,8 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
     def get_preview(self, obj):
-        return format_html('<img src="{url}" style="max-height:{max_height}" />'.format(
-            url=obj.image.url,
-            max_height='200px',
-            )
-        )
+        return format_html('<img src="{url}" style="max-height:{max_height}" />',
+                           url=obj.image.url, max_height='200px')
     get_preview.short_description = "Предпросмотр фото"
 
 
