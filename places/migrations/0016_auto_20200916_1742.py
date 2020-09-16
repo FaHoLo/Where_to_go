@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='place',
             name='description_short',
-            field=models.TextField(blank=True, max_length=400, verbose_name='Короткое описание'),
+            field=models.TextField(blank=True, verbose_name='Короткое описание'),
         ),
     ]

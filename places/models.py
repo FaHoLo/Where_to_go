@@ -8,7 +8,7 @@ class Place(models.Model):
     title = models.CharField('Заголовок', max_length=60)
     short_title = models.CharField('Короткий заголовок для отображения на карте', max_length=30)
     place_id = models.CharField('Уникальный идентификатор локации', max_length=30, unique=True)
-    description_short = models.TextField('Короткое описание', max_length=400, blank=True)
+    description_short = models.TextField('Короткое описание', blank=True)
     description_long = HTMLField('Полное описание', blank=True)
     lat = models.FloatField('Широта')
     lng = models.FloatField('Долгота')
