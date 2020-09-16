@@ -39,7 +39,7 @@ def download_json_data(url: str) -> dict:
 
 def create_place(data: dict) -> Place:
     short_title = parse_short_title(data['title'])
-    place = Place.objects.get_or_create(
+    place, created = Place.objects.get_or_create(
         title=data['title'],
         short_title=short_title,
         place_id=slugify(short_title),
@@ -47,7 +47,7 @@ def create_place(data: dict) -> Place:
         description_long=data['description_long'],
         lat=data['coordinates']['lat'],
         lng=data['coordinates']['lng'],
-    )[0]
+    )
     return place
 
 
