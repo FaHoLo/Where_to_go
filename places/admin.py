@@ -14,9 +14,9 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     def get_preview(self, obj):
         if not obj.image:
             return 'Выберите фото. Превью появится после сохранения.'
-        test = format_html('<img src="{url}" style="max-height:{max_height}" />',
+        return format_html('<img src="{url}" style="max-height:{max_height}" />',
                            url=obj.image.url, max_height='200px')
-        return test
+
     get_preview.short_description = "Предпросмотр фото"
 
 
